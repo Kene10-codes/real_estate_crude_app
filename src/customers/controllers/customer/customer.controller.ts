@@ -10,6 +10,6 @@ export class CustomerController {
     @Post('signup')
     @UsePipes(ValidationPipe)
     signupCustomer(@Body() signupCustomer: SignUpDto){
-        this.customerService.signupCustomer(signupCustomer)
+       return this.customerService.signupCustomer(signupCustomer)
     }
 }
