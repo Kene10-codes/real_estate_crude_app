@@ -7,10 +7,15 @@ import { PropertiesModule } from './properties/properties.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import DB_INFO from './database';
 import entities from './typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: DB_INFO.port,
