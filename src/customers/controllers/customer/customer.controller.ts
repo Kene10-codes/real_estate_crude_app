@@ -1,4 +1,5 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { JWTGuard } from 'src/auth/guards/jwt.guard';
 import { SignUpDto } from 'src/customers/dtos/signup.dto';
 import { CustomerService } from 'src/customers/services/customer/customer.service';
 
@@ -14,14 +15,23 @@ export class CustomerController {
        return this.customerService.getCustomers()
     }
 
+    @Get(':id')
+    @UseInterceptors(ClassSerializerInterceptor)
+    @UseGuards(JWTGuard)
+    getCustomer(@Param('id', ParseIntPipe) id: any){
+       return this.customerService.getCustomer(id)
+    }
+
     @Put(':id')
-     @UseInterceptors(ClassSerializerInterceptor)
+    @UseGuards(JWTGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     updateCustomer(@Param('id') id: number, @Body() updateCustomer: SignUpDto) {
       return this.customerService.updateCustomer(id, updateCustomer)
     }
 
 
     @Delete(':id')
+    @UseGuards(JWTGuard)
     deleteCusomter(@Param('id', ParseIntPipe) id: any) {
         return this.customerService.deleteCustomer(id)
     }

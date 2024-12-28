@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { PropertyType } from "../enums/enum.type";
 
 
 @Entity()
@@ -10,10 +11,8 @@ export class Property {
     id: number;
 
 
-    @Column({
-        name: 'property_tile'
-    })
-    property: string;
+    @Column()
+    property_title: string;
 
     @Column({
         name: 'property_description'
@@ -24,4 +23,14 @@ export class Property {
         name: 'total_price'
     })
     price: string;
+
+    @Column()
+    url: string;
+
+    @Column({
+        type: 'enum',
+        enum: PropertyType,
+        default: [PropertyType.RENT]
+    })
+    type: PropertyType;
 }

@@ -17,7 +17,15 @@ export class CustomerService {
        } else {
         return customers
        }
-       
+    }
+
+    async getCustomer(id: number ){
+      const customer = await this.customerRepository.findOneBy({id})
+      if(customer) {
+        return customer
+      } else {
+        throw new NotFoundException(`Customer with ID ${id} not found!!!`)
+      }
     }
 
     async deleteCustomer(id: any) {
