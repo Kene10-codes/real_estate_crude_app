@@ -1,29 +1,40 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { stringify } from 'node:querystring';
-import { SignUpDto } from 'src/customers/dtos/signup.dto';
 import { Customer as CustomerEntity} from 'src/customers/typeorm/customer';
-import { encodePassword } from 'src/customers/util/bcrypt';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class CustomerService {
      
 
-    constructor(@InjectRepository(CustomerEntity) private readonly customerReposity: Repository<CustomerEntity>){}
+    constructor(@InjectRepository(CustomerEntity) private readonly customerRepository: Repository<CustomerEntity>){}
 
 
-    async signupCustomer(customerDto: SignUpDto){
-        const {email} = customerDto
-       const  password = await encodePassword(customerDto.password)
-       const customer =  this.customerReposity.create({...customerDto, password})
-       if(customer) {
-        const isCustomer = await this.customerReposity.findOneBy({email})
-        console.log(isCustomer)
-        //  return this.customerReposity.save(customer)
+    async getCustomers(){
+       const customers = await this.customerRepository.find()
+       if(!customers) {
+        throw new NotFoundException("No user found")
+       } else {
+        return customers
+       }
+       
+    }
+
+    async deleteCustomer(id: any) {
+       const customer = await this.customerRepository.delete({id})
+       if (customer) {
+        return "Customer successfully removed the database"
        } else {
         throw new BadRequestException()
        }
-              
+    }
+
+    async updateCustomer(id: number, updateData: Partial<CustomerEntity>) {
+        const customer = await this.customerRepository.findOne({where: {id}})
+        if(!customer) {
+            throw new NotFoundException(`Customer with ID ${id} not found!!!`)
+        }
+        Object.assign(customer, updateData)
+        return await this.customerRepository.save(customer)
     }
 }
