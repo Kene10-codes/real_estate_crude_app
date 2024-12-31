@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { PropertyDTO } from 'src/properties/dtos/property.dto';
 import { PropertiesService } from 'src/properties/services/properties/properties.service';
+
+import {Query as ExpressQuery} from 'express-serve-static-core'
 
 @Controller('properties')
 export class PropertiesController {
@@ -17,8 +19,8 @@ export class PropertiesController {
  }
 
  @Get()
- getProperties() {
-    return this.propertiesService.getProperties()
+ getProperties(@Query() query: ExpressQuery) {
+    return this.propertiesService.getProperties(query)
  }
 
  @Get(':id')
