@@ -32,7 +32,7 @@ export class AuthService {
 
 
  async signup(customerDto: SignUpDto): Promise<{token: any}>{
-    const {email} = customerDto
+    const {email, roles} = customerDto
    const  password = await encodePassword(customerDto.password)
    const customer =  this.customerRepository.create({...customerDto, password})
    if(customer) {
@@ -41,7 +41,7 @@ export class AuthService {
         throw new BadRequestException("User already exists!!!")
     } else {
        await this.customerRepository.save(customer)
-       return {token:  await this.jwtService.signAsync({email})}
+       return {token:  await this.jwtService.signAsync({email, roles})}
     }
    } else {
     throw new BadRequestException()

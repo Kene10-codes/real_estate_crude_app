@@ -37,12 +37,13 @@ export class CustomerService {
        }
     }
 
-    async updateCustomer(id: number, updateData: Partial<CustomerEntity>) {
-        const customer = await this.customerRepository.findOne({where: {id}})
-        if(!customer) {
-            throw new NotFoundException(`Customer with ID ${id} not found!!!`)
-        }
-        Object.assign(customer, updateData)
-        return await this.customerRepository.save(customer)
-    }
+    async updateCustomer(id: number, updateData: Partial<CustomerEntity>): Promise<CustomerEntity> {
+      await this.customerRepository.update(id, updateData)
+      const updateProperty = await this.customerRepository.findOneBy({id})
+     if(updateProperty){
+        return updateProperty
+     } else {
+        throw new NotFoundException('No property Found')
+     }
+}
 }

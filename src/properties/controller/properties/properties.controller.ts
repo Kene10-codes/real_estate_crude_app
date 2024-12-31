@@ -1,10 +1,14 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { PropertyDTO } from 'src/properties/dtos/property.dto';
 import { PropertiesService } from 'src/properties/services/properties/properties.service';
 
 import {Query as ExpressQuery} from 'express-serve-static-core'
+import { JWTGuard } from 'src/auth/guards/jwt.guard';
+import { Role } from 'src/auth/enum/role.enum';
+import { Roles } from 'src/auth/decorator/role.decorator';
+import { RolesGuard } from 'src/auth/guards/role.guard';
 
 @Controller('properties')
 export class PropertiesController {
@@ -12,6 +16,8 @@ export class PropertiesController {
 
 
  @Post('add-property')
+ @Roles(Role.Admin)
+ @UseGuards(JWTGuard, RolesGuard)
  @UseInterceptors(FileInterceptor('file'))
  async uploadFile(@Body() propertyDto: PropertyDTO, @UploadedFile() file: Express.Multer.File) {
    const url = `http://localhost:3000/api/property/uploads/${file.filename}`;
@@ -19,6 +25,7 @@ export class PropertiesController {
  }
 
  @Get()
+ @UseGuards(JWTGuard)
  getProperties(@Query() query: ExpressQuery) {
     return this.propertiesService.getProperties(query)
  }
@@ -29,11 +36,15 @@ export class PropertiesController {
  }
 
  @Put(':id')
+ @Roles(Role.Admin)
+ @UseGuards(JWTGuard, RolesGuard)
  updateProperty(@Param('id') id: number, @Body() propertyDTO : PropertyDTO) {
     return this.propertiesService.updateProperty(id, propertyDTO)
  }
 
  @Delete(':id')
+ @Roles(Role.Admin)
+ @UseGuards(JWTGuard, RolesGuard)
  removeProperty(@Param('id') id: number) {
     return this.propertiesService.removeProperty(id)
  }

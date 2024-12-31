@@ -6,7 +6,6 @@ import { Observable } from "rxjs";
 @Injectable()
 export class JWTGuard extends AuthGuard('jwt') {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        console.log("JWT GUARD")
         return super.canActivate(context)
     }
 

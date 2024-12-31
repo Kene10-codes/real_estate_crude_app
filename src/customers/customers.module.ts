@@ -7,7 +7,9 @@ import { JWTStratergy } from 'src/auth/stratergies/jwt.stratergy';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [PassportModule ,TypeOrmModule.forFeature([Customer])],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }), 
+    TypeOrmModule.forFeature([Customer])],
   providers: [{
      provide: 'CUSTOMER_SERVICE',
      useClass: CustomerService
