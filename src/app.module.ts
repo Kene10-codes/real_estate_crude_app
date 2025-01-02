@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import DB_INFO from './database';
 import entities from './typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 
 @Module({
@@ -15,6 +17,10 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 50000,
+      limit: 10,
+    }]),
     TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
@@ -26,6 +32,9 @@ import { ConfigModule } from '@nestjs/config';
     synchronize: true
   }), CustomersModule, AuthModule, PropertiesModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }],
 })
 export class AppModule {}

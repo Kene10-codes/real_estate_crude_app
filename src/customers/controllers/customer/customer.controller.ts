@@ -1,4 +1,5 @@
 import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { Roles } from 'src/auth/decorator/role.decorator';
 import { Role } from 'src/auth/enum/role.enum';
 import { JWTGuard } from 'src/auth/guards/jwt.guard';
@@ -12,6 +13,7 @@ export class CustomerController {
     constructor(@Inject('CUSTOMER_SERVICE') private readonly customerService: CustomerService){}
 
     @Get()
+    @SkipThrottle()
     @Roles(Role.Admin)
     @UseGuards(JWTGuard, RolesGuard)
     @UseInterceptors(ClassSerializerInterceptor)
