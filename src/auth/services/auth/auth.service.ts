@@ -4,7 +4,7 @@ import {Customer as CustomerEntity} from '../../../customers/typeorm/customer'
 import { Repository } from 'typeorm';
 import { SignUpDto } from 'src/customers/dtos/signup.dto';
 import { LoginDto } from 'src/auth/dtos/login.dto';
-import { checkPassword, encodePassword } from 'src/auth/util/bcrypt';
+import { checkPassword, encodePassword } from '../../util/bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

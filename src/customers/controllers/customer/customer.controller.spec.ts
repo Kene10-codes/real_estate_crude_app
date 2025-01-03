@@ -3,6 +3,7 @@ import { CustomerController } from './customer.controller';
 
 describe('CustomerController', () => {
   let controller: CustomerController;
+  const id = 1
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -10,9 +11,10 @@ describe('CustomerController', () => {
     }).compile();
 
     controller = module.get<CustomerController>(CustomerController);
+    controller.deleteCusomter(id)
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(controller).toBeDefined(); 
   });
 });

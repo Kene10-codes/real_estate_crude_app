@@ -13,6 +13,6 @@ export class SignUpDto {
     @IsNotEmpty()
     @MinLength(6)
     password: string;
-    roles: Role;
+    roles: Role[]
 
 } 

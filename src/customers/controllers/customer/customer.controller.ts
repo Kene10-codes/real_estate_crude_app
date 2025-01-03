@@ -1,11 +1,11 @@
 import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { Role } from 'src/auth/enum/role.enum';
-import { JWTGuard } from 'src/auth/guards/jwt.guard';
-import { RolesGuard } from 'src/auth/guards/role.guard';
-import { SignUpDto } from 'src/customers/dtos/signup.dto';
-import { CustomerService } from 'src/customers/services/customer/customer.service';
+import { Roles } from '../../../auth/decorator/role.decorator';
+import { Role } from '../../../auth/enum/role.enum';
+import { JWTGuard } from '../../../auth/guards/jwt.guard';
+import { RolesGuard } from '../../../auth/guards/role.guard';
+import { SignUpDto } from '../../../customers/dtos/signup.dto';
+import { CustomerService } from '../../../customers/services/customer/customer.service';
 
 
 @Controller('customers')

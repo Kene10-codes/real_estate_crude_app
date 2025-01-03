@@ -1,6 +1,6 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Customer as CustomerEntity} from 'src/customers/typeorm/customer';
+import { Customer as CustomerEntity} from '../../../customers/typeorm/customer';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -8,7 +8,6 @@ export class CustomerService {
      
 
     constructor(@InjectRepository(CustomerEntity) private readonly customerRepository: Repository<CustomerEntity>){}
-
 
     async getCustomers(){
        const customers = await this.customerRepository.find()

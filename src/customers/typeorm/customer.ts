@@ -1,5 +1,5 @@
 import { Exclude } from "class-transformer";
-import { Role } from "src/auth/enum/role.enum";
+import { Role } from "../../auth/enum/role.enum";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -32,5 +32,5 @@ export class Customer {
      enum: Role,
      default: [Role.User]
    })
-   roles: Role;
+   roles: Role[]
 }
