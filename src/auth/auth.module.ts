@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './controllers/auth/auth.controller';
 import { AuthService } from './services/auth/auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer } from 'src/customers/typeorm/customer';
+import { Customer } from '../customers/typeorm/customer';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStratergy } from './stratergies/local.stratergy';
 import { PassportModule } from '@nestjs/passport';

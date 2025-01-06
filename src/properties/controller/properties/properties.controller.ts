@@ -1,14 +1,12 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request } from 'express';
-import { PropertyDTO } from 'src/properties/dtos/property.dto';
-import { PropertiesService } from 'src/properties/services/properties/properties.service';
-
+import { PropertyDTO } from '../../../properties/dtos/property.dto';
+import { PropertiesService } from '../../../properties/services/properties/properties.service';
 import {Query as ExpressQuery} from 'express-serve-static-core'
-import { JWTGuard } from 'src/auth/guards/jwt.guard';
-import { Role } from 'src/auth/enum/role.enum';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { RolesGuard } from 'src/auth/guards/role.guard';
+import { JWTGuard } from '../../../auth/guards/jwt.guard';
+import { Role } from '../../../auth/enum/role.enum';
+import { Roles } from '../../../auth/decorator/role.decorator';
+import { RolesGuard } from '../../../auth/guards/role.guard';
 
 @Controller('properties')
 export class PropertiesController {

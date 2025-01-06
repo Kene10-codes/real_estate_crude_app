@@ -3,7 +3,7 @@ import { CustomerService } from './services/customer/customer.service';
 import { CustomerController } from './controllers/customer/customer.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Customer } from './typeorm/customer';
-import { JWTStratergy } from 'src/auth/stratergies/jwt.stratergy';
+import { JWTStratergy } from '../auth/stratergies/jwt.stratergy';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({

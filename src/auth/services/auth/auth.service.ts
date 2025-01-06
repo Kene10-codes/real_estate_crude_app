@@ -34,6 +34,7 @@ export class AuthService {
  async signup(customerDto: SignUpDto): Promise<{token: any}>{
     const {email, roles} = customerDto
    const  password = await encodePassword(customerDto.password)
+   console.log(password)
    const customer =  this.customerRepository.create({...customerDto, password})
    if(customer) {
     const isCustomer = await this.customerRepository.findOne({ where: {email}})

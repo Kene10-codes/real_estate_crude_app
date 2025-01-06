@@ -1,5 +1,5 @@
-import { Property } from "src/properties/typeorm/properties";
-import { Customer } from "src/customers/typeorm/customer";
+import { Property } from "../properties/typeorm/properties";
+import { Customer } from "../customers/typeorm/customer";
 
 const entities = [Property, Customer]
 

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PropertyDTO } from 'src/properties/dtos/property.dto';
-import { Property as PropertyEntity } from 'src/properties/typeorm/properties';
+import { PropertyDTO } from '../../dtos/property.dto';
+import { Property as PropertyEntity } from '../../typeorm/properties';
 import { Like, Repository } from 'typeorm';
 import {Query } from 'express-serve-static-core'
 
