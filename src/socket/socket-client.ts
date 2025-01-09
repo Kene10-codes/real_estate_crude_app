@@ -5,7 +5,7 @@ import { io, Socket } from 'socket.io-client'
 export class SocketClient implements OnModuleInit {
     public socketClient: Socket
    constructor() {
-     this.socketClient = io('http://localhost:3000')
+     this.socketClient = io('http://localhost:9000')
    }
 
    onModuleInit() {
@@ -13,7 +13,8 @@ export class SocketClient implements OnModuleInit {
    }
 
    private registerConsumerEvent () {
-    this.socketClient.on('connection', () => {
+    this.socketClient.emit('newMessage', {msg: 'Hi there!'})
+    this.socketClient.on('connect', () => {
         console.log("Connected to the gateway!!!")
        })
 
