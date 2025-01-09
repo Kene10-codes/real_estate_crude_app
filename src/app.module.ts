@@ -10,10 +10,12 @@ import entities from './typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { SocketModule } from './socket/socket-module';
 
 
 @Module({
   imports: [
+    SocketModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
