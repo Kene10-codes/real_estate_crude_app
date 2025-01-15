@@ -2,8 +2,8 @@ import { BadRequestException, Inject, Injectable, UnauthorizedException } from '
 import { InjectRepository } from '@nestjs/typeorm';
 import {Customer as CustomerEntity} from '../../../customers/typeorm/customer'
 import { Repository } from 'typeorm';
-import { SignUpDto } from 'src/customers/dtos/signup.dto';
-import { LoginDto } from 'src/auth/dtos/login.dto';
+import { SignUpDto } from '../../../customers/dtos/signup.dto';
+import { LoginDto } from '../../../auth/dtos/login.dto';
 import { checkPassword, encodePassword } from '../../util/bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -32,9 +32,12 @@ export class AuthService {
 
 
  async signup(customerDto: SignUpDto): Promise<{token: any}>{
-    const {email, roles} = customerDto
-   const  password = await encodePassword(customerDto.password)
-   console.log(password)
+    const {email, roles, password} = customerDto
+    if (!password) {
+      throw new BadRequestException('Password is required');
+  }
+
+   await encodePassword(customerDto.password)
    const customer =  this.customerRepository.create({...customerDto, password})
    if(customer) {
     const isCustomer = await this.customerRepository.findOne({ where: {email}})

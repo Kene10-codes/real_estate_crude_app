@@ -5,7 +5,7 @@ import { CustomersModule } from './customers/customers.module';
 import { AuthModule } from './auth/auth.module';
 import { PropertiesModule } from './properties/properties.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import DB_INFO from './database';
+import {DB_INFO} from './database';
 import entities from './typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -24,8 +24,8 @@ import { SocketModule } from './socket/socket-module';
       limit: 10,
     }]),
     TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
+    type: DB_INFO.type,
+    host: DB_INFO.host,
     port: DB_INFO.port,
     username: DB_INFO.username,
     password: DB_INFO.password,

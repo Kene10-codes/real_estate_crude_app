@@ -7,13 +7,19 @@ import { JWTGuard } from '../../../auth/guards/jwt.guard';
 import { Role } from '../../../auth/enum/role.enum';
 import { Roles } from '../../../auth/decorator/role.decorator';
 import { RolesGuard } from '../../../auth/guards/role.guard';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Property } from 'src/properties/typeorm/properties';
 
+@ApiTags('real-estate')
 @Controller('properties')
 export class PropertiesController {
  constructor(@Inject('PROPERTIES_SERVICE') private readonly propertiesService: PropertiesService){}
 
 
  @Post('add-property')
+   @ApiOperation({ summary: 'Add property' })
+   @ApiResponse({ status: 201, description: 'Property added successfully', type: Property})
+   @ApiResponse({ status: 400, description: 'Bad Request' })
  @Roles(Role.Admin)
  @UseGuards(JWTGuard, RolesGuard)
  @UseInterceptors(FileInterceptor('file'))
@@ -23,17 +29,28 @@ export class PropertiesController {
  }
 
  @Get()
+   @ApiOperation({ summary: 'Fetch properties' })
+   @ApiResponse({ status: 201, description: 'Properties fetched successfully', type: Property})
+   @ApiResponse({ status: 400, description: 'Bad Request' })
  @UseGuards(JWTGuard)
  getProperties(@Query() query: ExpressQuery) {
     return this.propertiesService.getProperties(query)
  }
 
  @Get(':id')
+ @ApiOperation({ summary: 'Fetch property' })
+ @ApiResponse({ status: 201, description: 'Property fetched successfully', type: Property})
+ @ApiResponse({ status: 400, description: 'Bad Request' })
+@UseGuards(JWTGuard)
  getProperty(@Param('id') id: number) {
     return this.propertiesService.getProperty(id)
  }
 
  @Put(':id')
+ @ApiOperation({ summary: 'Update property' })
+ @ApiResponse({ status: 201, description: 'Property updated successfully', type: Property})
+ @ApiResponse({ status: 400, description: 'Bad Request' })
+@UseGuards(JWTGuard)
  @Roles(Role.Admin)
  @UseGuards(JWTGuard, RolesGuard)
  updateProperty(@Param('id') id: number, @Body() propertyDTO : PropertyDTO) {
@@ -41,6 +58,9 @@ export class PropertiesController {
  }
 
  @Delete(':id')
+ @ApiOperation({ summary: 'Delete property' })
+ @ApiResponse({ status: 201, description: 'Property deleted successfully'})
+ @ApiResponse({ status: 400, description: 'Bad Request' })
  @Roles(Role.Admin)
  @UseGuards(JWTGuard, RolesGuard)
  removeProperty(@Param('id') id: number) {

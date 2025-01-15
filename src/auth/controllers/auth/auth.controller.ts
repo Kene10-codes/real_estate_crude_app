@@ -4,7 +4,9 @@ import { JWTGuard } from '../../guards/jwt.guard';
 import { LocalGuard } from '../../../auth/guards/local.guard';
 import { AuthService } from '../../../auth/services/auth/auth.service';
 import { SignUpDto } from '../../../customers/dtos/signup.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('real-estate')
 @Controller('auth')
 export class AuthController {
     constructor(@Inject('AUTH_SERVICE') private readonly authService: AuthService){}
